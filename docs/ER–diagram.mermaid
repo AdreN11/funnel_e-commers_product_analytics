@@ -1,0 +1,83 @@
+erDiagram
+    CUSTOMERS ||--o{ SESSIONS : "имеет"
+    CUSTOMERS ||--o{ ORDERS : "делает"
+    
+    SESSIONS ||--o{ EVENTS : "содержит"
+    
+    ORDERS ||--o{ ORDER_ITEMS : "содержит"
+    ORDERS ||--o{ REVIEWS : "получает"
+    
+    PRODUCTS ||--o{ ORDER_ITEMS : "входит в"
+    PRODUCTS ||--o{ EVENTS : "участвует в"
+    PRODUCTS ||--o{ REVIEWS : "оценивается в"
+    
+    CUSTOMERS {
+        int customer_id PK
+        string name
+        string email
+        string country
+        int age
+        string signup_date
+        bool marketing_opt_in
+    }
+    
+    SESSIONS {
+        int session_id PK
+        int customer_id FK
+        string start_time
+        string device
+        string source
+        string country
+    }
+    
+    EVENTS {
+        int event_id PK
+        int session_id FK
+        string timestamp
+        string event_type
+        float product_id FK
+        float qty
+        float cart_size
+        string payment
+        float discount_pct
+        float amount_usd
+    }
+    
+    ORDERS {
+        int order_id PK
+        int customer_id FK
+        string order_time
+        string payment_method
+        int discount_pct
+        float subtotal_usd
+        float total_usd
+        string country
+        string device
+        string source
+    }
+    
+    ORDER_ITEMS {
+        int order_id FK
+        int product_id FK
+        float unit_price_usd
+        int quantity
+        float line_total_usd
+    }
+    
+    PRODUCTS {
+        int product_id PK
+        string category
+        string name
+        float price_usd
+        float cost_usd
+        float margin_usd
+    }
+    
+    REVIEWS {
+        int review_id PK
+        int order_id FK
+        int product_id FK
+        int rating
+        string review_text
+        string review_time
+    }
